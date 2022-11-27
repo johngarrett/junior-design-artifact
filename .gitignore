@@ -22,7 +22,7 @@ DerivedData
 project.xcworkspace
 **/.xcode.env.local
 
-ios/Pods
+ios/Pods/
 
 # Gradle
 /build/
