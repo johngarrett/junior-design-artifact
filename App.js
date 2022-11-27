@@ -5,6 +5,9 @@ import {
   ViroText,
   ViroTrackingStateConstants,
   ViroARSceneNavigator,
+  ViroSpotLight,
+  ViroAmbientLight,
+  ViroMaterials
 } from '@viro-community/react-viro';
 
 const HelloWorldSceneAR = () => {
@@ -20,11 +23,25 @@ const HelloWorldSceneAR = () => {
 
   return (
     <ViroARScene onTrackingUpdated={onInitialized}>
+
+      <ViroAmbientLight color={"#aaaaaa"} influenceBitMask={1} />
+
+      <ViroSpotLight
+          innerAngle={5}
+          outerAngle={90}
+          direction={[0,-1,-.2]}
+          position={[0, 3, 1]}
+          color="#aaaaaa"
+          castsShadow={true}
+          />
+
       <ViroText
+        extrusionDepth={5}
         text={text}
-        scale={[0.5, 0.5, 0.5]}
-        position={[0, 0, -1]}
-        style={styles.helloWorldTextStyle}
+        fontSize={12}
+        position={[0, 0, -1.5]}
+        style={styles.boldFont}
+        materials={["frontMaterial", "backMaterial", "sideMaterial"]}
       />
     </ViroARScene>
   );
@@ -44,11 +61,22 @@ export default () => {
 
 var styles = StyleSheet.create({
   f1: {flex: 1},
-  helloWorldTextStyle: {
+  boldFont: {
     fontFamily: 'Arial',
-    fontSize: 30,
     color: '#ffffff',
     textAlignVertical: 'center',
     textAlign: 'center',
   },
 });
+
+ViroMaterials.createMaterials({
+  frontMaterial: {
+    diffuseColor: '#FFFFFF'
+   },
+   backMaterial: {
+     diffuseColor: '#FF0000',
+   },
+   sideMaterial: { 
+     diffuseColor: '#0000FF'
+    },
+  });
